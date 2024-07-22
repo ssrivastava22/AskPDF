@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>PDF QA</title>
+</head>
+<body>
+    <div class="container">
+        <h1>PDF QA</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <input type="text" name="query" placeholder="Ask a question" required>
+            <button type="submit">Submit</button>
+        </form>
+        {% if query %}
+            <h2>Question: {{ query }}</h2>
+            <h3>Answer: {{ answer }}</h3>
+            <h3>Relevant Documents:</h3>
+            <ul>
+                {% for doc, score in documents %}
+                    <li>[{{ score }}] {{ doc.page_content[:84] }}...</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
